@@ -28,7 +28,24 @@ install(TARGETS
 charlie
 DESTINATION lib/${PROJECT_NAME})
 
-
+add_library(action_client SHARED
+  src/charlie_sub_aclient.cpp)
+target_include_directories(action_client PRIVATE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_definitions(action_client
+  PRIVATE "CHARLIE_BUILDING_DLL")
+ament_target_dependencies(action_client
+  "ball_interfaces"
+  "rclcpp"
+  "rclcpp_action"
+  "rclcpp_components")
+rclcpp_components_register_node(action_client PLUGIN "charlie::BallActionClient" EXECUTABLE delta_aclient_test)
+install(TARGETS
+  action_client
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

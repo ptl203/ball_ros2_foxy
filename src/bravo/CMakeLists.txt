@@ -20,14 +20,14 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(ball_interfaces REQUIRED)
 
-add_executable(bravo_client_publisher src/bravo_client_publisher.cpp)
+add_executable(bravo_server_publisher src/bravo_server_publisher.cpp)
 ament_target_dependencies(
-  bravo_client_publisher
+  bravo_server_publisher
   rclcpp 
   ball_interfaces)
 
 install(TARGETS
-  bravo_client_publisher
+  bravo_server_publisher
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

@@ -1,2 +1,1 @@
-string prefix
-int64 counter
+string message

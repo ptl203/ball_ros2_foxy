@@ -41,25 +41,6 @@ install(TARGETS
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-  add_library(action_client SHARED
-  src/delta_aclient_test.cpp)
-target_include_directories(action_client PRIVATE
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_compile_definitions(action_client
-  PRIVATE "DELTA_BUILDING_DLL")
-ament_target_dependencies(action_client
-  "ball_interfaces"
-  "rclcpp"
-  "rclcpp_action"
-  "rclcpp_components")
-rclcpp_components_register_node(action_client PLUGIN "delta::BallActionClient" EXECUTABLE delta_aclient_test)
-install(TARGETS
-  action_client
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

@@ -20,14 +20,14 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(ball_interfaces REQUIRED)
 
-add_executable(alpha_server src/alpha_service.cpp)
+add_executable(alpha_server_sub src/alpha_service_sub.cpp)
 ament_target_dependencies(
-  alpha_server
+  alpha_server_sub
   rclcpp 
   ball_interfaces)
 
 install(TARGETS
-  alpha_server
+  alpha_server_sub
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
