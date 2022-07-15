@@ -19,7 +19,7 @@ class Bravo : public rclcpp::Node
         {
             RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->message.c_str());
             auto message = ball_interfaces::msg::PubSub();
-            message.message = "Throwing to Charlie " + std::to_string(count_++);
+            message.message = "Throwing to Charlie Count: " + std::to_string(count_++);
             RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.message.c_str());
             publisher_->publish(message);
         }
