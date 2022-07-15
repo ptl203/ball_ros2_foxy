@@ -31,4 +31,12 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+add_executable(charlie src/charlie.cpp)
+ament_target_dependencies(charlie
+rclcpp ball_interfaces)
+
+install(TARGETS
+  charlie
+  DESTINATION lib/${PROJECT_NAME})
+
 ament_package()
