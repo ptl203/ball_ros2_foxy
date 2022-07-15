@@ -8,23 +8,24 @@ using std::placeholders::_2;
 class Charlie : public rclcpp::Node
 {
     public:
-        Charlie() : Node("Bravo") 
+        Charlie() : Node("Bravo"), count_(0) 
         {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Charlie Node Started");
             subscriber_ = this->create_subscription<ball_interfaces::msg::PubSub>("bc_connect", 10, std::bind(&Charlie::bc_callback, this, _1));
             publisher_ = this->create_publisher<ball_interfaces::msg::PubSub>("ca_connect", 10);
         }
     private:
-        void bc_callback(const ball_interfaces::msg::PubSub::SharedPtr msg) const
+        void bc_callback(const ball_interfaces::msg::PubSub::SharedPtr msg)
         {
             RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->message.c_str());
             auto message = ball_interfaces::msg::PubSub();
-            message.message = "Throwing to Alpha";
+            message.message = "Throwing to Alpha " + std::to_string(count_++);
             RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.message.c_str());
             publisher_->publish(message);
         }
         rclcpp::Subscription<ball_interfaces::msg::PubSub>::SharedPtr subscriber_;
         rclcpp::Publisher<ball_interfaces::msg::PubSub>::SharedPtr publisher_;
+        size_t count_;
 };
 
 int main(int argc, char **argv)

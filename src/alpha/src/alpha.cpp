@@ -9,7 +9,7 @@ using std::placeholders::_2;
 class Alpha : public rclcpp::Node
 {
     public:
-        Alpha() : Node("Alpha") 
+        Alpha() : Node("Alpha"), count_(0)
         {
             service_ = this->create_service<ball_interfaces::srv::StartSequence>("start_trigger", std::bind(&Alpha::start, this, _1, _2));
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Alpha Node Started");
@@ -30,11 +30,11 @@ class Alpha : public rclcpp::Node
             publisher_->publish(message);
         }  
 
-        void ca_callback(const ball_interfaces::msg::PubSub::SharedPtr msg) const
+        void ca_callback(const ball_interfaces::msg::PubSub::SharedPtr msg)
         {
             RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->message.c_str());
             auto message = ball_interfaces::msg::PubSub();
-            message.message = "Throwing to Bravo";
+            message.message = "Throwing to Bravo " + std::to_string(count_++);
             RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.message.c_str());
             publisher_->publish(message);
         }
@@ -42,6 +42,7 @@ class Alpha : public rclcpp::Node
         rclcpp::Subscription<ball_interfaces::msg::PubSub>::SharedPtr subscriber_; 
         rclcpp::Service<ball_interfaces::srv::StartSequence>::SharedPtr service_;
         rclcpp::Publisher<ball_interfaces::msg::PubSub>::SharedPtr publisher_;
+        size_t count_;
 };
 
 int main(int argc, char **argv)
