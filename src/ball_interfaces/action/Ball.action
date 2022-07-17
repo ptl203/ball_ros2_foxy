@@ -1,5 +1,5 @@
-int32 requested
+int32 request
 ---
-int32 spun
+int32 complete
 ---
 int32 progress 
